@@ -1,0 +1,180 @@
+:root {
+    --rojo-hada: #e11d48;
+    --rojo-oscuro: #9f1239;
+    --blanco: #ffffff;
+    --gris-fondo: #f1f5f9;
+    --texto: #334155;
+}
+
+body {
+    background-color: var(--gris-fondo);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    color: var(--texto);
+}
+
+/* Contenedor Principal */
+.main-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Header Estilo ColorHada */
+.header-hada {
+    background: var(--rojo-hada);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 15px -3px rgba(225, 29, 72, 0.2);
+}
+
+/* Tarjetas de contenido */
+.card-hada {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+
+/* Formulario de carga */
+.form-carga {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+input {
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    outline: none;
+}
+
+input:focus {
+    border-color: var(--rojo-hada);
+    kerning: 2px var(--rojo-hada);
+}
+
+.btn-vender {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-vender:hover { background: #059669; }
+
+/* Estilos para Pantallas de Acceso (Login/Registro) */
+.auth-body {
+    background: linear-gradient(135deg, #fdf2f2 0%, #f1f5f9 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-attachment: fixed;
+}
+
+.auth-card {
+    background: rgba(255, 255, 255, 0.95);
+    width: 100%;
+    max-width: 400px;
+    height: 800px; /* Simula el tamaño de un celular */
+    border-radius: 50px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+}
+
+/* El círculo de degradado superior */
+.auth-header-gradient {
+    background: linear-gradient(135deg, #fee2e2 0%, #ffffff 100%);
+    height: 300px;
+    width: 120%;
+    border-radius: 50%;
+    position: absolute;
+    top: -100px;
+    left: -10%;
+    z-index: 0;
+}
+
+.auth-content {
+    position: relative;
+    z-index: 1;
+    padding: 40px;
+    margin-top: 200px;
+}
+
+.auth-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.auth-subtitle {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.auth-subtitle a {
+    color: var(--rojo-hada);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Inputs con borde rojo sutil como en tu imagen */
+.auth-input-group {
+    margin-bottom: 20px;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 1.5px solid #fca5a5; /* Rojo suave */
+    border-radius: 20px;
+    font-size: 16px;
+    box-sizing: border-box;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.auth-input:focus {
+    border-color: var(--rojo-hada);
+    box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.1);
+}
+
+/* Botón con icono */
+.auth-btn {
+    background: var(--rojo-hada);
+    color: white;
+    width: 100%;
+    padding: 16px;
+    border-radius: 20px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.auth-btn:hover {
+    background: var(--rojo-oscuro);
+}

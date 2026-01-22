@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingresar | ColorHada</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="auth-body">
+
+    <div class="auth-card">
+        <div class="auth-header-gradient"></div>
+        
+        <div class="auth-content">
+            <h1 class="auth-title">Ingresar</h1>
+            <p class="auth-subtitle">No tienes cuenta? <a href="/registro">Regístrate aquí</a></p>
+
+            <form action="/login" method="POST">
+                <div class="auth-input-group">
+                    <input type="text" name="usuario" class="auth-input" placeholder="Usuario" required>
+                </div>
+                <div class="auth-input-group">
+                    <input type="password" name="password" class="auth-input" placeholder="Contraseña" required>
+                </div>
+                
+                <button type="submit" class="auth-btn">
+                    Entrar al Sistema <span>➜</span>
+                </button>
+            </form>
+
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <p style="color: var(--rojo-hada); text-align: center; font-size: 14px; margin-top: 15px;">
+                    {{ messages[0] }}
+                </p>
+              {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ColorHada | Gestión</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="main-container">
+    <header class="header-hada">
+        <div>
+            <h1 style="margin:0; font-size: 24px;">🦋 ColorHada Regaleria - Libreria</h1>
+            <p style="margin:0; opacity: 0.9;">Panel de Administración</p>
+        </div>
+        <div style="display:flex; gap:15px;">
+            <a href="/buscar_precio" style="color:white; text-decoration:none; font-weight:bold;">🔍 Precios</a>
+            <a href="/logout" style="background:rgba(0,0,0,0.2); padding:8px 15px; border-radius:8px; color:white; text-decoration:none;">Cerrar Sesión</a>
+        </div>
+    </header>
+
+    <section class="card-hada">
+        <h2 style="margin-top:0; color: var(--rojo-hada);">✨ Cargar Nuevo Producto</h2>
+        <form action="/agregar" method="POST" class="form-carga">
+            <input type="text" name="categoria" placeholder="Sección (Bazar, Colegio...)" required>
+            <input type="text" name="nombre" placeholder="Nombre del Producto" required>
+            <input type="number" name="stock" placeholder="Stock Inicial" required>
+            <input type="number" step="0.01" name="precio" placeholder="Precio $" required>
+            <button type="submit" style="background:var(--rojo-hada); color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">+ Añadir</button>
+        </form>
+    </section>
+
+    <section>
+        {% for cat, productos in secciones.items() %}
+        <div class="card-hada">
+            <h3 style="color:var(--rojo-hada); border-bottom: 2px solid #fee2e2; padding-bottom:10px;">📦 {{ cat }}</h3>
+            <div style="overflow-x: auto;">
+                <table style="width:100%; border-collapse: collapse; margin-top:10px;">
+                    <thead>
+                        <tr style="text-align:left; color:#64748b; font-size:14px;">
+                            <th style="padding:10px;">Producto</th>
+                            <th>Stock</th>
+                            <th>Precio</th>
+                            <th style="text-align:right;">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in productos %}
+                        <tr style="border-top: 1px solid #f1f5f9;">
+                            <td style="padding:15px 10px; font-weight:600;">{{ p.nombre }}</td>
+                            <td><span style="background:#f1f5f9; padding:4px 10px; border-radius:20px;">{{ p.stock }}</span></td>
+                            <td style="font-weight:bold;">${{ p.precio }}</td>
+                            <td style="text-align:right;">
+                                <form action="/vender" method="POST" style="display:inline-flex; gap:5px;">
+                                    <input type="hidden" name="id" value="{{ p.id }}">
+                                    <input type="number" name="cantidad" value="1" style="width:40px; padding:5px;">
+                                    <button type="submit" class="btn-vender">Vender</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+</div>
+
+</body>
+</html>

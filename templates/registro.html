@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta | ColorHada</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="auth-body">
+
+    <div class="auth-card">
+        <div class="auth-header-gradient" style="background: linear-gradient(135deg, #f5f3ff 0%, #ffffff 100%);"></div>
+        
+        <div class="auth-content">
+            <h1 class="auth-title">Crear cuenta</h1>
+            <p class="auth-subtitle">Ya tienes cuenta? <a href="/login">Ingresa aquí</a></p>
+
+            <form action="/registro" method="POST">
+                <div class="auth-input-group">
+                    <input type="text" name="usuario" class="auth-input" placeholder="Nuevo Usuario" required>
+                </div>
+                <div class="auth-input-group">
+                    <input type="password" name="password" class="auth-input" placeholder="Contraseña" required>
+                </div>
+                
+                <button type="submit" class="auth-btn">
+                    Crear mi cuenta <span>➜</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
