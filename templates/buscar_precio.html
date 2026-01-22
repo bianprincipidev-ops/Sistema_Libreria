@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultar Precios | ColorHada</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="auth-body">
+    <div class="auth-card" style="height: auto; min-height: 500px; max-width: 600px; padding: 40px; margin: 20px;">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h1 class="auth-title">🔍 Buscador</h1>
+            <p class="auth-subtitle">Consulta precios rápidamente</p>
+        </div>
+
+        <form action="/buscar_precio" method="POST" style="display: flex; gap: 10px; margin-bottom: 30px;">
+            <input type="text" name="busqueda" class="auth-input" placeholder="Nombre del producto..." value="{{ busqueda }}" autofocus>
+            <button type="submit" class="auth-btn" style="width: auto; padding: 0 20px;">Buscar</button>
+        </form>
+
+        {% if resultados %}
+            <div style="overflow-y: auto; max-height: 300px;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--rojo-hada); color: var(--rojo-hada); text-align: left;">
+                            <th style="padding: 10px;">Producto</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for r in resultados %}
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 12px 10px;">{{ r.nombre }}</td>
+                            <td style="font-weight: bold; color: #10b981;">${{ r.precio }}</td>
+                            <td>{{ r.stock }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% elif busqueda %}
+            <p style="text-align: center; color: #666;">No se encontraron productos con "{{ busqueda }}"</p>
+        {% endif %}
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="/" style="color: var(--rojo-hada); text-decoration: none; font-weight: bold;">← Volver al Panel</a>
+        </div>
+    </div>
+</body>
+</html>

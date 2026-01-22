@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar | ColorHada</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="auth-body">
+    <div class="auth-card" style="height: auto; padding: 40px; margin-top: 50px;">
+        <h1 class="auth-title">Editar Producto</h1>
+        <form action="/editar/{{ p.id }}" method="POST">
+            <div class="auth-input-group">
+                <label style="font-size: 12px; font-weight: bold; color: var(--rojo-hada);">Nombre del Producto</label>
+                <input type="text" name="nombre" class="auth-input" value="{{ p.nombre }}" required>
+            </div>
+            <div class="auth-input-group">
+                <label style="font-size: 12px; font-weight: bold; color: var(--rojo-hada);">Precio ($)</label>
+                <input type="number" step="0.01" name="precio" class="auth-input" value="{{ p.precio }}" required>
+            </div>
+            <div class="auth-input-group">
+                <label style="font-size: 12px; font-weight: bold; color: var(--rojo-hada);">Stock Actual</label>
+                <input type="number" name="stock" class="auth-input" value="{{ p.stock }}" required>
+            </div>
+            <div class="auth-input-group">
+                <label style="font-size: 12px; font-weight: bold; color: var(--rojo-hada);">Stock Mínimo (Alerta)</label>
+                <input type="number" name="stock_minimo" class="auth-input" value="{{ p.stock_minimo }}" required>
+            </div>
+            
+            <button type="submit" class="auth-btn">Guardar Cambios</button>
+            <a href="/" style="display:block; text-align:center; margin-top:15px; color:var(--rojo-hada); text-decoration:none;">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

@@ -178,3 +178,58 @@ input:focus {
 .auth-btn:hover {
     background: var(--rojo-oscuro);
 }
+
+/* Clase para stock normal */
+.stock-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    background: #f1f5f9;
+    color: #334155;
+}
+
+/* Clase para cuando el stock es bajo */
+.stock-bajo {
+    background: #fee2e2 !important;
+    color: #e11d48 !important;
+}
+
+/* Contenedor flotante para alertas */
+.contenedor-alertas {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    width: 90%;
+    max-width: 500px;
+}
+
+.alerta {
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Sombra para que flote */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.btn-cerrar-alerta {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.5;
+    padding-left: 10px;
+}
+
+.btn-cerrar-alerta:hover { opacity: 1; }
