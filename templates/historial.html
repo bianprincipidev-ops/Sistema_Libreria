@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Caja ColorHada</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body style="background:#f8fafc;">
+    <div class="main-container">
+        <header class="header-hada" style="background: #0f172a; margin-bottom: 20px;">
+            <h1>💰 Caja del Día ({{ fecha }})</h1>
+            <a href="/" style="color:white; text-decoration:none; font-weight:bold;">← Volver al Panel</a>
+        </header>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+            <div class="card-hada">
+                <h2 style="color:var(--rojo-hada);">🛍️ Ventas de Productos</h2>
+                <table style="width:100%;">
+                    {% for v in ventas %}
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding:10px;">{{ v.producto_nombre }} (x{{ v.cantidad }})</td>
+                        <td style="text-align:right;"><strong>${{ v.monto_total }}</strong></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <p style="text-align:right; font-size:1.2rem; margin-top:15px; border-top: 1px solid #eee; padding-top: 10px;">
+                    Subtotal: <strong>${{ total_v }}</strong>
+                </p>
+            </div>
+
+            <div class="card-hada">
+                <h2 style="color:#10b981;">📠 Servicios</h2>
+                <table style="width:100%; text-align:left;">
+                    {% for s in servicios %}
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding:10px;">{{ s.tipo }}</td>
+                        <td style="text-align:right; font-weight:bold;">${{ s.monto }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <p style="text-align:right; font-size:1.2rem; margin-top:15px; border-top: 1px solid #eee; padding-top: 10px;">
+                    Subtotal: <strong>${{ total_s }}</strong>
+                </p>
+            </div>
+        </div>
+
+        <div class="card-hada" style="margin-top:20px; text-align:center; background:#1e293b; color:white;">
+            <h2 style="margin:0;">💵 TOTAL EN CAJA: ${{ total_dia }}</h2>
+        </div>
+    </div>
+</body>
+</html>

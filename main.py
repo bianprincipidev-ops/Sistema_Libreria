@@ -24,6 +24,39 @@ def conectar():
     conn.row_factory = sqlite3.Row
     return conn
 
+# -- INICIALIZACION DE BASE DE DATOS --
+def inicializar_db():
+    conn = conectar()
+    # Tabla de servicios (Corregido TIMESTAMP)
+    conn.execute('''
+                 CREATE TABLE IF NOT EXISTS servicios (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    tipo TEXT NOT NULL,
+                    monto REAL NOT NULL,
+                    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            ''')
+    
+    # Tabla de ventas (Aseguramos que se cree aquí también)
+    conn.execute('''
+                 CREATE TABLE IF NOT EXISTS ventas (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    producto_nombre TEXT NOT NULL,
+                    cantidad INTEGER NOT NULL,
+                    monto_total REAL NOT NULL,
+                    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            ''')
+            
+    try:
+        conn.execute('ALTER TABLE productos ADD COLUMN stock_minimo INTEGER DEFAULT 5')
+    except:
+        pass  # La columna ya existe
+    conn.commit()
+    conn.close()
+
+inicializar_db()
+
 # --- RUTAS DE ACCESO ---
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -104,13 +137,34 @@ def vender():
     
     if p:
         if p['stock'] >= cant:
+            total_venta = p['precio'] * cant
+            
             conn.execute('UPDATE productos SET stock = stock - ? WHERE id = ?', (cant, id_prod))
+            conn.execute('INSERT INTO ventas (producto_nombre, cantidad, monto_total) VALUES (?, ?, ?)',
+                         (p['nombre'], cant, total_venta))
+            
             conn.commit()
             flash(f"✅ Venta exitosa: {p['nombre']} (x{cant})", "success")
         else:
-            flash(f"❌ Error: No hay stock suficiente de {p['nombre']}. Solo quedan {p['stock']}.", "danger")
+            flash(f"❌ Error: No hay stock suficiente de {p['nombre']}.", "danger")
     
     conn.close()
+    return redirect(url_for('index'))
+
+@app.route('/registrar_servicio', methods=['POST'])
+@login_required
+def registrar_servicio():
+    tipo = request.form.get('tipo_servicio')
+    try:
+        monto = float(request.form.get('monto'))
+        conn = conectar()
+        conn.execute('INSERT INTO servicios (tipo, monto) VALUES (?, ?)', (tipo, monto))
+        conn.commit()
+        conn.close()
+        flash(f"✅ Servicio '{tipo}' registrado por ${monto:.2f}", "success")
+    except:
+        flash("❌ Error al registrar el servicio. Verifique los datos ingresados.", "danger")
+
     return redirect(url_for('index'))
 
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
@@ -147,6 +201,22 @@ def buscar_precio():
         conn.close()
     
     return render_template('buscar_precio.html', resultados=resultados, busqueda=busqueda)
+
+@app.route('/historial')
+@login_required
+def historial():
+    conn = conectar()
+    hoy = datetime.now().strftime('%Y-%m-%d')
+    # Buscamos ventas y servicios del día
+    ventas = conn.execute('SELECT * FROM ventas WHERE date(fecha) = ?', (hoy,)).fetchall()
+    servicios = conn.execute('SELECT * FROM servicios WHERE date(fecha) = ?', (hoy,)).fetchall()
+    
+    total_v = sum(v['monto_total'] for v in ventas)
+    total_s = sum(s['monto'] for s in servicios)
+    
+    conn.close()
+    return render_template('historial.html', ventas=ventas, servicios=servicios, 
+                           total_v=total_v, total_s=total_s, total_dia=total_v+total_s, fecha=hoy)
 
 @app.route('/borrar/<int:id>')
 @login_required
