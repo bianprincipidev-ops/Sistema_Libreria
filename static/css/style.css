@@ -233,3 +233,26 @@ input:focus {
 }
 
 .btn-cerrar-alerta:hover { opacity: 1; }
+
+/* Botón Volver Universal */
+.btn-volver {
+    background: #343a40 !important; /* Color gris oscuro profesional */
+    color: white !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-decoration: none;
+}
+
+.btn-volver:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.header-hada {
+    display: flex;
+    align-items: center; /* Alinea flecha y título verticalmente */
+    padding: 15px 20px;
+}

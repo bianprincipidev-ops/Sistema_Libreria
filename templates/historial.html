@@ -7,9 +7,14 @@
 </head>
 <body style="background:#f8fafc;">
     <div class="main-container">
-        <header class="header-hada" style="background: #0f172a; margin-bottom: 20px;">
-            <h1>💰 Caja del Día ({{ fecha }})</h1>
-            <a href="/" style="color:white; text-decoration:none; font-weight:bold;">← Volver al Panel</a>
+        <header class="header-hada" style="background: #0f172a;">
+            <div style="display: flex; align-items: center;">
+                <a href="/" class="btn-volver" title="Volver al Panel">←</a>
+                <div>
+                    <h1 style="margin:0; font-size: 20px;">Caja del Día</h1>
+                    <p style="margin:0; opacity: 0.8; font-size: 14px;">{{ fecha }}</p>
+                </div>
+            </div>
         </header>
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">

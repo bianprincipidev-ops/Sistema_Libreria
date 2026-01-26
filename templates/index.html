@@ -87,10 +87,6 @@
             <h1 style="margin:0; font-size: 24px;">🦋 ColorHada Regaleria - Libreria</h1>
             <p style="margin:0; opacity: 0.9;">Panel de Administración</p>
         </div>
-        <div style="display:flex; gap:15px;">
-            <a href="/buscar_precio" style="color:white; text-decoration:none; font-weight:bold;">🔍 Precios</a>
-            <a href="/logout" style="background:rgba(0,0,0,0.2); padding:8px 15px; border-radius:8px; color:white; text-decoration:none;">Cerrar Sesión</a>
-        </div>
         <div style="display:flex; gap:15px; align-items: center;">
             <a href="/buscar_precio" style="color:white; text-decoration:none; font-weight:bold;">🔍 Precios</a>
             <a href="/historial" style="background:#10b981; padding:8px 15px; border-radius:8px; color:white; text-decoration:none; font-weight:bold;">💰 Ver Caja</a>
@@ -104,7 +100,7 @@
             <input type="text" name="categoria" placeholder="Sección (Bazar, Colegio...)" required>
             <input type="text" name="nombre" placeholder="Nombre del Producto" required>
             <input type="number" name="stock" placeholder="Stock Inicial" required>
-            <input type="number" name="stock_minimo" placeholder="Alerta Stock Mínimo" required title="El sistema te avisará cuando el stock llegue a este número">
+            <input type="number" name="stock_minimo" placeholder="Alerta Stock Mínimo (Opcional)" title="El sistema te avisará cuando el stock llegue a este número">
             <input type="number" step="0.01" name="precio" placeholder="Precio $" required>
             <button type="submit" style="background:var(--rojo-hada); color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">+ Añadir</button>
         </form>
