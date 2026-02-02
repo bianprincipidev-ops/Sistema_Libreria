@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>ColorHada | Gestión</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="static/css/style.css">
     <style>
         .contenedor-alertas {
             position: fixed;
@@ -19,36 +19,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Sombra más fuerte para dar profundidad */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             animation: slideDown 0.4s ease-out;
             margin-bottom: 10px;
             padding: 15px;
             border-radius: 12px;
-            opacity: 1 !important; 
+            background-color: #ffffff;
             position: relative;
-            z-index: 10001;
         }
-
-        /* Colores SÓLIDOS (sin transparencias) */
-        .alerta-error { 
-            background-color: #ffffff !important; /* Fondo blanco sólido */
-            color: #991b1b; 
-            border: 2px solid #fecaca; 
-            border-left: 8px solid #ef4444; /* Barra lateral roja para destacar */
-        }
-
-        .alerta-aviso { 
-            background-color: #ffffff !important; 
-            color: #854d0e; 
-            border: 2px solid #fef08a; 
-            border-left: 8px solid #f59e0b; /* Barra lateral amarilla */
-        }
-
         .alerta-exito { 
-            background-color: #ffffff !important; 
             color: #166534; 
             border: 2px solid #bbf7d0; 
-            border-left: 8px solid #10b981; /* Barra lateral verde */
+            border-left: 8px solid #10b981; 
         }
         @keyframes slideDown {
             from { transform: translateY(-20px); opacity: 0; }
@@ -61,24 +43,16 @@
             cursor: pointer;
             color: inherit;
             opacity: 0.6;
-            margin-left: 10px;
         }
-        .btn-cerrar:hover { opacity: 1; }
     </style>
 </head>
 <body>
 
-<div class="contenedor-alertas" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 10000; width: 90%; max-width: 450px;">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          <div class="alerta {{ 'alerta-error' if category == 'danger' else 'alerta-aviso' if category == 'warning' else 'alerta-exito' }}">
-            <span>{{ message }}</span>
-            <button class="btn-cerrar" onclick="this.parentElement.remove()">×</button>
-          </div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
+<div class="contenedor-alertas">
+    <div class="alerta alerta-exito">
+        <span>✨ Sistema listo para usar (Modo Demo)</span>
+        <button class="btn-cerrar" onclick="this.parentElement.remove()">×</button>
+    </div>
 </div>
 
 <div class="main-container">
@@ -88,99 +62,75 @@
             <p style="margin:0; opacity: 0.9;">Panel de Administración</p>
         </div>
         <div style="display:flex; gap:15px; align-items: center;">
-            <a href="/buscar_precio" style="color:white; text-decoration:none; font-weight:bold;">🔍 Precios</a>
-            <a href="/historial" style="background:#10b981; padding:8px 15px; border-radius:8px; color:white; text-decoration:none; font-weight:bold;">💰 Ver Caja</a>
-            <a href="/logout" style="background:rgba(0,0,0,0.2); padding:8px 15px; border-radius:8px; color:white; text-decoration:none;">Cerrar Sesión</a>
+            <a href="#" style="color:white; text-decoration:none; font-weight:bold;">🔍 Precios</a>
+            <a href="#" style="background:#10b981; padding:8px 15px; border-radius:8px; color:white; text-decoration:none; font-weight:bold;">💰 Ver Caja</a>
         </div>
     </header>
 
     <section class="card-hada">
-        <h2 style="margin-top:0; color: var(--rojo-hada);">✨ Cargar Nuevo Producto</h2>
-        <form action="/agregar" method="POST" class="form-carga">
-            <input type="text" name="categoria" placeholder="Sección (Bazar, Colegio...)" required>
-            <input type="text" name="nombre" placeholder="Nombre del Producto" required>
-            <input type="number" name="stock" placeholder="Stock Inicial" required>
-            <input type="number" name="stock_minimo" placeholder="Alerta Stock Mínimo (Opcional)" title="El sistema te avisará cuando el stock llegue a este número">
-            <input type="number" step="0.01" name="precio" placeholder="Precio $" required>
-            <button type="submit" style="background:var(--rojo-hada); color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">+ Añadir</button>
-        </form>
+        <h2 style="margin-top:0; color: #ef4444;">✨ Cargar Nuevo Producto</h2>
+        <div class="form-carga" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+            <input type="text" placeholder="Sección (Bazar, Colegio...)">
+            <input type="text" placeholder="Nombre del Producto">
+            <input type="number" placeholder="Stock Inicial">
+            <input type="number" placeholder="Precio $">
+            <button style="background:#ef4444; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer; height: 45px;">+ Añadir</button>
+        </div>
     </section>
 
     <section class="card-hada" style="border-top: 5px solid #10b981;">
         <h2 style="margin-top:0; color: #10b981; font-size: 1.2rem;">📠 Servicios (Copias y más)</h2>
-        <form action="/registrar_servicio" method="POST" style="display: flex; flex-wrap: wrap; gap: 15px; align-items: stretch;">
-            
-            <select name="tipo_servicio" class="auth-input" style="flex: 2; min-width: 200px; height: 50px; padding: 0 15px; margin: 0;" required>
-                <option value="" disabled selected>¿Qué servicio?</option>
-                <option value="Fotocopia B/N">Fotocopia B/N</option>
-                <option value="Anillado">Anillado</option>
-                <option value="Plastificado">Plastificado</option>
-                <option value="Impresión">Impresión</option>
+        <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+            <select style="flex: 2; height: 50px; padding: 0 15px; border-radius: 8px; border: 1px solid #ddd;">
+                <option>Fotocopia B/N</option>
+                <option>Anillado</option>
+                <option>Plastificado</option>
             </select>
-
-            <div style="flex: 1; min-width: 120px; position: relative;">
-                <span style="position: absolute; left: 12px; top: 14px; color: #64748b; font-weight: bold;">$</span>
-                <input type="number" step="0.01" name="monto" class="auth-input" placeholder="Precio" 
-                    style="height: 50px; padding-left: 30px; margin: 0; width: 100%; box-sizing: border-box;" required>
-            </div>
-
-            <button type="submit" style="background:#10b981; color:white; border:none; border-radius:8px; padding: 0 25px; height: 50px; font-weight:bold; cursor:pointer; flex: 1; min-width: 150px;">
-                Registrar Pago
-            </button>
-        </form>
-    </section>
-
-    <section>
-        {% for cat, productos in secciones.items() %}
-        <div class="card-hada">
-            <h3 style="color:var(--rojo-hada); border-bottom: 2px solid #fee2e2; padding-bottom:10px;">📦 {{ cat }}</h3>
-            <div style="overflow-x: auto;">
-                <table style="width:100%; border-collapse: collapse; margin-top:10px;">
-                    <thead>
-                        <tr style="text-align:left; color:#64748b; font-size:14px;">
-                            <th style="padding:10px;">Producto</th>
-                            <th>Stock</th>
-                            <th>Precio</th>
-                            <th style="text-align:center;">Gestión</th> 
-                            <th style="text-align:right;">Venta Rápida</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for p in productos %}
-                        <tr style="border-top: 1px solid #f1f5f9;">
-                            <td style="padding:15px 10px; font-weight:600;">{{ p.nombre }}</td>
-                            
-                            <td>
-                                <span class="stock-badge {{ 'stock-bajo' if p.stock <= p.stock_minimo }}">
-                                    {{ p.stock }}
-                                </span>
-                            </td>
-
-                            <td style="font-weight:bold;">${{ p.precio }}</td>
-                            
-                            <td style="text-align:center;">
-                                <a href="/editar/{{ p.id }}" style="text-decoration:none; margin-right:10px;" title="Editar">✏️</a>
-                                <a href="/borrar/{{ p.id }}" onclick="return confirm('¿Borrar {{ p.nombre }}?')" style="text-decoration:none;" title="Borrar">🗑️</a>
-                            </td>
-
-                            <td style="text-align:right;">
-                                <form action="/vender" method="POST" style="display:inline-flex; gap:5px;">
-                                    <input type="hidden" name="id" value="{{ p.id }}">
-                                    <input type="number" name="cantidad" value="1" min="1" style="width:45px; padding:5px; border-radius:5px; border:1px solid #ddd;">
-                                    <button type="submit" class="btn-vender">Vender</button>
-                                </form>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+            <input type="number" placeholder="$ Precio" style="flex: 1; height: 50px; padding: 0 15px; border-radius: 8px; border: 1px solid #ddd;">
+            <button style="background:#10b981; color:white; border:none; border-radius:8px; padding: 0 25px; height: 50px; font-weight:bold; cursor:pointer;">Registrar Pago</button>
         </div>
-        {% endfor %}
     </section>
+
+    <div class="card-hada">
+        <h3 style="color:#ef4444; border-bottom: 2px solid #fee2e2; padding-bottom:10px;">📦 BAZAR</h3>
+        <div style="overflow-x: auto;">
+            <table style="width:100%; border-collapse: collapse; margin-top:10px;">
+                <thead>
+                    <tr style="text-align:left; color:#64748b; font-size:14px;">
+                        <th style="padding:10px;">Producto</th>
+                        <th>Stock</th>
+                        <th>Precio</th>
+                        <th style="text-align:center;">Gestión</th> 
+                        <th style="text-align:right;">Venta Rápida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-top: 1px solid #f1f5f9;">
+                        <td style="padding:15px 10px; font-weight:600;">Vaso Térmico</td>
+                        <td><span style="background: #fee2e2; color: #991b1b; padding: 4px 8px; border-radius: 12px; font-size: 12px;">2 (Bajo)</span></td>
+                        <td style="font-weight:bold;">$20.500</td>
+                        <td style="text-align:center;">✏️ 🗑️</td>
+                        <td style="text-align:right;">
+                            <button style="background:#10b981; color:white; border:none; padding:8px 15px; border-radius:6px; cursor:pointer;">Vender</button>
+                        </td>
+                    </tr>
+                    <tr style="border-top: 1px solid #f1f5f9;">
+                        <td style="padding:15px 10px; font-weight:600;">Mate Madera</td>
+                        <td><span style="background: #f1f5f9; padding: 4px 8px; border-radius: 12px; font-size: 12px;">15</span></td>
+                        <td style="font-weight:bold;">$12.000</td>
+                        <td style="text-align:center;">✏️ 🗑️</td>
+                        <td style="text-align:right;">
+                            <button style="background:#10b981; color:white; border:none; padding:8px 15px; border-radius:6px; cursor:pointer;">Vender</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <script>
+    // Animación de cierre automático de alertas
     setTimeout(() => {
         const alertas = document.querySelectorAll('.alerta');
         alertas.forEach(alerta => {
@@ -188,7 +138,7 @@
             alerta.style.opacity = "0";
             setTimeout(() => alerta.remove(), 600);
         });
-    }, 4000); // 4 segundos y se van solas
+    }, 4000);
 </script>
 
 </body>
